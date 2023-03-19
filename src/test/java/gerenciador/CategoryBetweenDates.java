@@ -15,7 +15,7 @@ public class CategoryBetweenDates extends Token{
         String token = new Token().authenticacaoAdm();
 
         given()
-                .header("Autorization", token)
+                .header("Authorization", token)
                 .contentType(ContentType.JSON)
                 .body("{\n" +
                         "    \"category\":\"tecnologia\",\n" +
@@ -35,7 +35,7 @@ public class CategoryBetweenDates extends Token{
         String tokenFail = new Token().authenticacaoFake();
 
         given()
-                .header("Autorization", tokenFail)
+                .header("Authorization", tokenFail)
                 .contentType(ContentType.JSON)
                 .body("{\n" +
                         "    \"categoryy\":\"tecnologia\",\n" +

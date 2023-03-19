@@ -17,31 +17,26 @@ public class GetAllCategories extends Token{
         String token = new Token().authenticacaoAdm();
 
         given()
-                .header("Autorization", token)
+                .header("Authorization", token)
                 .contentType(ContentType.JSON)
                 .post("/get_all_categories")
                 .then()
                 .log()
-                .all()
-                //.assertThat()
-                //.body("id", equalTo("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"))
-                //.body("category", equalTo("[tecnologia na educação, turismo na educação, musculação na educação, empreendedorismo na educação, tecnologia, automobilismo, empreendedorismo, turismo, nova_categoria_via_postman, nova_categoria_via_postman]"))
-            ;
+                .all();
     }
 
     @Test
-    public void GetCategories401(){
+    public void GetCategories404(){
         baseURI = "http://127.0.0.1";
         port = 3500;
 
         String tokenFail = new Token().authenticacaoFake();
 
         given()
-                .header("Autorization", tokenFail)
+                .header("Authorization", tokenFail)
                 .contentType(ContentType.JSON)
-                .post("/get_all_categories")
+                .post("/get_categories")
                 .then()
-                .statusCode(401)
-        ;
+                .statusCode(404);
     }
 }

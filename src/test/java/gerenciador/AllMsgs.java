@@ -16,7 +16,7 @@ public class AllMsgs extends Token{
         String token = new Token().authenticacaoAdm();
 
         given()
-                .header("Autorization", token)
+                .header("Authorization", token)
                 .contentType(ContentType.JSON)
                 .get("/all")
                 .then()
@@ -35,7 +35,7 @@ public class AllMsgs extends Token{
         String tokenFail = new Token().authenticacaoFake();
 
         given()
-                .header("Autorization", tokenFail)
+                .header("Authorization", tokenFail)
                 .contentType(ContentType.JSON)
                 .get("/all")
                 .then()

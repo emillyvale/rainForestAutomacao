@@ -4,11 +4,10 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.*;
-import static io.restassured.RestAssured.given;
 
-public class MessageByCategory extends Token{
+public class ById extends Token{
     @Test
-    public void MessageCategory200(){
+    public void ById200(){
         baseURI = "http://127.0.0.1";
         port = 3500;
 
@@ -18,33 +17,17 @@ public class MessageByCategory extends Token{
                 .header("Authorization", token)
                 .contentType(ContentType.JSON)
                 .body("{\n" +
-                        "    \"category\":\"auto\"\n" +
+                        "  \"message_id\": 10\n" +
                         "}")
-                .post("/by_category")
+                .when()
+                .post("/by_id")
                 .then()
+                .log().all()
                 .statusCode(200);
     }
 
     @Test
-    public void MessageCategory401(){
-        baseURI = "http://127.0.0.1";
-        port = 3500;
-
-        String tokenFail = new Token().authenticacaoFake();
-
-        given()
-                .header("Authorization", tokenFail)
-                .contentType(ContentType.JSON)
-                .body("{\n" +
-                        "    \"category\":\"tecnologia\"\n" +
-                        "}")
-                .post("/by_category")
-                .then()
-                .statusCode(401);
-    }
-
-    @Test
-    public void MessageCategory500(){
+    public void ById401(){
         baseURI = "http://127.0.0.1";
         port = 3500;
 
@@ -54,10 +37,32 @@ public class MessageByCategory extends Token{
                 .header("Authorization", token)
                 .contentType(ContentType.JSON)
                 .body("{\n" +
-                        "    \"categoryy\":\"tecnologia\"\n" +
+                        "  \"message_id\": 10\n" +
                         "}")
-                .post("/by_category")
+                .when()
+                .post("/by_id")
                 .then()
+                .log().all()
+                .statusCode(401);
+    }
+
+    @Test
+    public void ById500(){
+        baseURI = "http://127.0.0.1";
+        port = 3500;
+
+        String token = new Token().authenticacaoAdm();
+
+        given()
+                .header("Authorization", token)
+                .contentType(ContentType.JSON)
+                .body("{\n" +
+                        "  \"message_id\": \n" +
+                        "}")
+                .when()
+                .post("/by_id")
+                .then()
+                .log().all()
                 .statusCode(500);
     }
 }
